@@ -1,1 +1,31 @@
-<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+<h2>Model Evaluation Overview</h2>
+<p>
+  To ensure the Tibetan OCR model delivers accurate and meaningful text
+  recognition, we evaluate its performance using two key metrics:
+  <strong>Character Error Rate (CER)</strong> and
+  <strong>Word Error Rate (WER)</strong>.
+</p>
+
+<h3>Character Error Rate (CER)</h3>
+<p>
+  CER measures how accurately the model recognizes individual Tibetan
+  characters. It calculates the number of character insertions, deletions, or
+  substitutions required to match the models output with the correct text. A
+  lower CER indicates higher accuracy at the character level, which is essential
+  for Tibetan, where small character errors can significantly change meaning.
+</p>
+
+<h3>Word Error Rate (WER)</h3>
+<p>
+  WER evaluates the accuracy of full word recognition. It counts how many words
+  were inserted, deleted, or substituted compared to the ground truth. A low WER
+  means the model is doing well at understanding complete words, making the
+  recognized text more readable and reliable.
+</p>
+
+<p>
+  Together, CER and WER provide a comprehensive picture of the OCR model quality
+  — from fine character details to full word understanding. These metrics help
+  users and developers track progress, identify errors, and continuously improve
+  the model.
+</p>
