@@ -16,9 +16,6 @@ published: True
 # allowed_email_domains: A list of domains allowed to participate in the challenge. Leave blank if everyone is allowed to participate. (e.g. ["domain1.com", "domain2.org", "domain3.in"] Participants with these email domains will only be allowed to participate.)
 tags:
   - Optic-Character-Recognition-OCR
-  - machine-learning
-  - data-science
-  - computer-vision
 leaderboard:
   - id: 1
     schema:
