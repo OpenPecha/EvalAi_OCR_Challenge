@@ -20,18 +20,13 @@ leaderboard:
   - id: 1
     schema:
       {
-        "labels": ["CER", "WER", "Total"],
-        "default_order_by": "Total",
+        "labels": ["CER"],
+        "default_order_by": "CER",
         "metadata":
           {
-            "Metric1":
+            "CER":
               {
-                "sort_ascending": True,
-                "description": "Word Error Rate (WER) measures the percentage of words incorrectly transcribed.",
-              },
-            "Metric2":
-              {
-                "sort_ascending": True,
+                "sort_ascending": False,
                 "description": "Character Error Rate (CER) measures the percentage of characters incorrectly transcribed.",
               },
           },
@@ -65,23 +60,6 @@ challenge_phases:
         is_visible: True
       - name: publication_url
         is_visible: True
-    submission_meta_attributes:
-      - name: TextAttribute
-        description: Sample
-        type: text
-        required: False
-      - name: SingleOptionAttribute
-        description: Sample
-        type: radio
-        options: ["A", "B", "C"]
-      - name: MultipleChoiceAttribute
-        description: Sample
-        type: checkbox
-        options: ["alpha", "beta", "gamma"]
-      - name: TrueFalseField
-        description: Sample
-        type: boolean
-        required: True
     is_restricted_to_select_one_submission: False
     is_partial_submission_evaluation_enabled: False
     # allowed_submission_file_types: ".json, .zip, .txt, .tsv, .gz, .csv, .h5, .npy, .npz"
@@ -113,23 +91,9 @@ challenge_phases:
         is_visible: True
       - name: publication_url
         is_visible: True
-    submission_meta_attributes:
-      - name: TextAttribute
-        description: Sample
-        type: text
-      - name: SingleOptionAttribute
-        description: Sample
-        type: radio
-        options: ["A", "B", "C"]
-      - name: MultipleChoiceAttribute
-        description: Sample
-        type: checkbox
-        options: ["alpha", "beta", "gamma"]
-      - name: TrueFalseField
-        description: Sample
-        type: boolean
     is_restricted_to_select_one_submission: False
     is_partial_submission_evaluation_enabled: False
+    allowed_submission_file_types: ".json, .csv"
 
 dataset_splits:
   - id: 1
