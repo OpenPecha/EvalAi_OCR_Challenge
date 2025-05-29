@@ -1,1 +1,93 @@
-<p>Submit any blank file here to see a random number generated for your submission. If you get lucky, you might reach the top of the leaderboard.</p>
+<h2>📤 Submission Guidelines</h2>
+<p>
+  Please carefully follow these guidelines to ensure your submission is valid
+  and can be evaluated successfully.
+</p>
+
+<h3>✅ File Format</h3>
+<ul>
+  <li>Your submission must be in <strong>JSON</strong> format.</li>
+  <li>The JSON file must contain a list of prediction entries.</li>
+  <li>
+    Each entry should be a dictionary with the following two keys:
+    <ul>
+      <li>
+        <code>filename</code> — The name of the image file (as given in the test
+        set).
+      </li>
+      <li>
+        <code>prediction</code> — Your model's predicted Tibetan transcription
+        (in Unicode).
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3>📝 Example JSON Structure</h3>
+<pre><code>[
+    {
+        "filename": "img_001.jpg",
+        "prediction": "བོད་ཡིག"
+    },
+    {
+        "filename": "img_002.jpg",
+        "prediction": "གསུང་བཤད"
+    }
+]
+</code></pre>
+
+<h3>📌 Important Notes</h3>
+<ul>
+  <li>
+    <strong>Do not</strong> include additional fields like IDs, confidence
+    scores, etc.
+  </li>
+  <li>
+    <strong>Do not</strong> submit results in CSV, Excel, or text formats — only
+    JSON is accepted.
+  </li>
+  <li>
+    Ensure that the <code>filename</code> values exactly match those in the test
+    annotation file (case-sensitive).
+  </li>
+  <li>
+    Your <code>prediction</code> must be in
+    <strong>valid Unicode Tibetan</strong> text.
+  </li>
+  <li>
+    Any image files in the test set that are missing from your submission will
+    be counted as <strong>missed files</strong> and excluded from scoring.
+  </li>
+</ul>
+
+<h3>📤 How to Submit</h3>
+<ol>
+  <li>Prepare your JSON file according to the format described above.</li>
+  <li>Name the file clearly, e.g., <code>submission.json</code>.</li>
+  <li>
+    Upload your file through the designated platform interface (e.g., EvalAI
+    submission portal).
+  </li>
+</ol>
+
+<h3>📊 Evaluation</h3>
+<p>
+  Your predictions will be evaluated using the
+  <strong>Character Error Rate (CER)</strong>. The lower your CER score, the
+  better the performance.
+</p>
+
+<h3>🚫 Submission Will Be Rejected If:</h3>
+<ul>
+  <li>The file is not in valid JSON format.</li>
+  <li>
+    Required keys (<code>filename</code>, <code>prediction</code>) are missing
+    or incorrectly named.
+  </li>
+  <li>Prediction entries are empty or missing for all test files.</li>
+</ul>
+
+<p>
+  For any issues or clarifications, please reach out to the challenge
+  organizers.
+</p>
