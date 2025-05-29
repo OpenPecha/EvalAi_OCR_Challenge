@@ -1,31 +1,120 @@
-<h2>Model Evaluation Overview</h2>
-<p>
-  To ensure the Tibetan OCR model delivers accurate and meaningful text
-  recognition, we evaluate its performance using two key metrics:
-  <strong>Character Error Rate (CER)</strong> and
-  <strong>Word Error Rate (WER)</strong>.
-</p>
-
-<h3>Character Error Rate (CER)</h3>
-<p>
-  CER measures how accurately the model recognizes individual Tibetan
-  characters. It calculates the number of character insertions, deletions, or
-  substitutions required to match the models output with the correct text. A
-  lower CER indicates higher accuracy at the character level, which is essential
-  for Tibetan, where small character errors can significantly change meaning.
-</p>
-
-<h3>Word Error Rate (WER)</h3>
-<p>
-  WER evaluates the accuracy of full word recognition. It counts how many words
-  were inserted, deleted, or substituted compared to the ground truth. A low WER
-  means the model is doing well at understanding complete words, making the
-  recognized text more readable and reliable.
-</p>
+<h2>🧪 Evaluation Script Description</h2>
 
 <p>
-  Together, CER and WER provide a comprehensive picture of the OCR model quality
-  — from fine character details to full word understanding. These metrics help
-  users and developers track progress, identify errors, and continuously improve
-  the model.
+  This evaluation script is used to assess the performance of Optical Character
+  Recognition (OCR) models on Tibetan text using the
+  <strong>Character Error Rate (CER)</strong> metric. The script compares
+  participant-submitted predictions with ground truth annotations and returns a
+  final evaluation score.
 </p>
+
+<h3>📤 Submission File Format</h3>
+<p>
+  Participants must submit a JSON file containing their predictions. The file
+  should be a list of dictionaries, where each dictionary represents a
+  prediction for one image. Each dictionary must contain the following keys:
+</p>
+
+<ul>
+  <li>
+    <strong>filename</strong>: (string) — The name of the image file (must match
+    the filenames provided in the test annotation file).
+  </li>
+  <li>
+    <strong>prediction</strong>: (string) — The predicted transcription (in
+    Unicode Tibetan).
+  </li>
+  <li>
+    <strong>note:</strong>: The number of rows must be same as the TestDataset.
+  </li>
+</ul>
+
+<p><strong>Example Submission File:</strong></p>
+<pre><code>[
+    {
+    "filename": "7-1-415b_2",
+    "image_url": "{image url same as in test dataset}",
+    "prediction": "ཡིན་པའི་ཕྱིར་རོ། ། དགག་དགྱེའི་གཞིའོ། ། ། གཉིས་པ་ནི། ནང་ཞེ་འགྲས་བདང་ .... "
+  }
+]</code></pre>
+
+<h3>📋 Test Annotation File Format</h3>
+<p>
+  The ground truth file used for evaluation is also a JSON file structured
+  similarly to the submission file:
+</p>
+<ul>
+  <li><strong>filename</strong>: (string) — File Name of the test image.</li>
+  <li><strong>image_url</strong>Link to the image on web</li>
+  <li>
+    <strong>label</strong>: (string) — Ground truth Tibetan transcription in
+    Unicode.
+  </li>
+</ul>
+
+<p><strong>Example Annotation File:</strong></p>
+<pre><code>[
+   {
+    "filename": "7-1-415b_2",
+    "image_url": "{image url}",
+    "label": "ཡིན་པའི་ཕྱིར་རོ། །དགག་དབྱེའི་གཞིའོ། །གཉིས་པ་ནི།ནང་ཞེ་འགྲས་པ་དང་ ....།",
+    "source": "karmapa8_test_data"
+  }
+]</code></pre>
+
+<h3>⚙️ Evaluation Process</h3>
+<ol>
+  <li>
+    The evaluator loads both the <strong>test annotations</strong> and the
+    <strong>user submission</strong>.
+  </li>
+  <li>
+    It matches the predictions with ground truth based on the
+    <code>filename</code>.
+  </li>
+  <li>
+    Both <code>label</code> and <code>prediction</code> are converted to
+    <strong>Wylie transliteration</strong> using <code>pyewts</code>.
+  </li>
+  <li>
+    <strong>CER</strong> is calculated using the <code>evaluate</code> library
+    for each file.
+  </li>
+  <li>
+    The script outputs the <strong>mean CER</strong> across all matched samples.
+  </li>
+  <li>
+    Files without a corresponding prediction are skipped and the count is
+    reported.
+  </li>
+</ol>
+
+<h3>📈 Evaluation Metric</h3>
+<p>The only metric used in this evaluation is:</p>
+<ul>
+  <li>
+    <strong>CER (Character Error Rate)</strong>: Measures the number of
+    character-level errors (insertions, deletions, substitutions) between the
+    prediction and the reference, normalized by the number of characters in the
+    reference.
+  </li>
+</ul>
+<p>
+  The <strong>lower</strong> the CER, the <strong>better</strong> the model's
+  performance.
+</p>
+
+<h3>🚫 Common Issues to Avoid</h3>
+<ul>
+  <li>
+    Make sure all filenames in your submission exactly match those in the test
+    annotation file.
+  </li>
+  <li>
+    Ensure your predictions are in valid <strong>Unicode Tibetan</strong>.
+  </li>
+  <li>
+    Do <strong>not</strong> leave predictions empty or missing; unmatched files
+    will be skipped and reduce your evaluated sample size.
+  </li>
+</ul>

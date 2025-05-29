@@ -1,12 +1,12 @@
 <h1>Tibetan OCR Model Prediction</h1>
-<h2>Overview</h2>
+<h4>Overview</h4>
 <p>
   OCR (Optical Character Recognition) is a technology used to convert images or
   scanned documents into editable and searchable text. Tibetan language OCR is
   more complex due to the script’s structure, vertical stacking, and limited
   training data.
 </p>
-<h2>Tibetan Script Characteristics</h2>
+<h4>Tibetan Script Characteristics</h4>
 <ul>
   <li>Written from left to right using the Uchen script.</li>
   <li>Characters are often stacked vertically within syllables.</li>
@@ -14,18 +14,15 @@
   <li>There is a lack of large, labeled datasets for training.</li>
 </ul>
 
-<h2>Prediction Output Example</h2>
+<h4>Prediction Output Example</h4>
 <pre><code>
 {
-  "text": "བོད་ཡིག་ཡིག་གཟུགས།",
-  "confidence": 0.94,
-  "segments": [
-    {"char": "བ", "conf": 0.96},
-    {"char": "ོ", "conf": 0.92}
-  ]
-}</code></pre>
+    "filename": "7-1-415b_2",
+    "image_url": "{URL of image}",
+    "prediction": "ཡིན་པའི་ཕྱིར་རོ། ། དགག་དགྱེའི་གཞིའོ། ། ། གཉིས་པ་ནི། ནང་ཞེ་འགྲས་བདང་......"
+  }</code></pre>
 
-<h2>Objective</h2>
+<h4>Objective</h4>
 <p>
   The objective of a Tibetan OCR (Optical Character Recognition) model
   prediction system is to accurately recognize and convert printed or

@@ -1,4 +1,4 @@
-"""
+
 # Q. How to install custom python pip packages?
 
 # A. Uncomment the below code to install the custom python packages.
@@ -23,34 +23,39 @@ def install(package):
         print("Error: Permission denied. ")
 
 
-def install_local_package(folder_name):
-    # Install a local python package
+# def install_local_package(folder_name):
+#     # Install a local python package
 
-    # Args:
-    #     folder_name ([str]): name of the folder placed in evaluation_script/
+#     # Args:
+#     #     folder_name ([str]): name of the folder placed in evaluation_script/
     
     
-    try:
-        subprocess.run([
-            sys.executable,
-            "-m",
-            "pip",
-            "install",
-            os.path.join(str(Path(__file__).parent.absolute()), folder_name)
-        ], capture_output=True, text=True, check=True)
-        print(f"Successfully installed local package from {folder_name}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Error occurred while installing local package from {folder_name}: {e.stderr}")
-    except FileNotFoundError:
-        print("Error: Pip not found.")
-    except PermissionError:
-        print("Error: Permission denied. ")
+#     try:
+#         subprocess.run([
+#             sys.executable,
+#             "-m",
+#             "pip",
+#             "install",
+#             os.path.join(str(Path(__file__).parent.absolute()), folder_name)
+#         ], capture_output=True, text=True, check=True)
+#         print(f"Successfully installed local package from {folder_name}.")
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error occurred while installing local package from {folder_name}: {e.stderr}")
+#     except FileNotFoundError:
+#         print("Error: Pip not found.")
+#     except PermissionError:
+#         print("Error: Permission denied. ")
 
-install("shapely==1.7.1")
-install("requests==2.25.1")
+# install("shapely==1.7.1")
+# install("requests==2.25.1")
+install("evaluate")
+install("jiwer")
+install("pyewts")
+install("pandas")
 
-install_local_package("package_folder_name")
 
-"""
+
+# install_local_package("package_folder_name")
+
 
 from .main import evaluate

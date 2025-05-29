@@ -1,9 +1,83 @@
-import random
+import pandas as pd
+from evaluate import load
+import pyewts
+import json
+
+
+def load_json_file(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
     print("Starting Evaluation.....")
-    print("Submission related metadata:")
+    output = {}
+
+    # initialize wylie and cer scorer
+    converter = pyewts.pyewts()
+    cer_scorer = load("cer")
+
+    annotations = load_json_file(test_annotation_file)
+    predictions = load_json_file(user_submission_file)
+
+    # Index predictions by filename for quick lookup
+    pred_dict = {entry["filename"]: entry["prediction"] for entry in predictions}
+
+    cer_scores = []
+    missed_files = 0
+
+    for entry in annotations:
+        filename = entry["filename"]
+        label = entry["label"]
+
+        if filename not in pred_dict:
+            missed_files += 1
+            continue
+
+        prediction = pred_dict[filename]
+
+        # Convert both label and prediction to Wylie transliteration
+        label_wylie = converter.toWylie(label.strip())
+        prediction_wylie = converter.toWylie(prediction.strip())
+
+        try:
+            cer_score = cer_scorer.compute(predictions=[prediction_wylie], references=[label_wylie])
+            cer_scores.append(cer_score)
+        except Exception as e:
+            print(f"[ERROR] Failed on {filename}: {e}")
+            continue
+
+    if len(cer_scores) == 0:
+        mean_cer = 1.0  # Set max CER if nothing evaluated
+    else:
+        mean_cer = sum(cer_scores) / len(cer_scores)
+
+    print(f"Evaluated {len(cer_scores)} samples. Missed {missed_files} files.")
+    print(f"Mean CER: {mean_cer:.4f}")
+
+    # Build EvalAI-compatible output
+    output = {}
+
+    metrics = {
+        "CER": round(mean_cer, 4)
+    }
+
+    if phase_codename == "dev":
+        output["result"] = [{"train_split": metrics}]
+        output["submission_result"] = metrics
+        print("Completed evaluation for Dev Phase")
+    elif phase_codename == "test":
+        output["result"] = [
+            {"train_split": metrics},
+            {"test_split": metrics}
+        ]
+        # output["submission_result"] = output["result"][0]
+        output["submission_result"] = output["result"][1]["test_split"]
+        # i have to take out submissio result as metric cer only 
+        print("Completed evaluation for Test Phase")
+
+    return output
+
     """
     Evaluates the submission for a particular challenge phase adn returns score
     Arguments:
@@ -39,6 +113,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             "id": 123,
             "submitted_at": u"2017-03-20T19:22:03.880652Z",
         }
+    """
     """
     print(kwargs["submission_metadata"])
     output = {}
@@ -81,3 +156,4 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         output["submission_result"] = output["result"][0]
         print("Completed evaluation for Test Phase")
     return output
+"""
