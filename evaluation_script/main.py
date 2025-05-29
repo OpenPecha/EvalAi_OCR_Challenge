@@ -2,6 +2,7 @@ import pandas as pd
 from evaluate import load
 import pyewts
 import json
+import sys
 
 
 def load_json_file(path):
@@ -20,6 +21,25 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     annotations = load_json_file(test_annotation_file)
     predictions = load_json_file(user_submission_file)
 
+    # Validate: Check file sizes are same
+    if len(annotations) != len(predictions):
+        print(f"[ERROR] Mismatch in number of entries: annotations({len(annotations)}) != predictions({len(predictions)})")
+        sys.exit(1)
+    
+    # Validate: Ensure all filenames match
+    annotation_filenames = {entry["filename"] for entry in annotations}
+    prediction_filenames = {entry["filename"] for entry in predictions}
+
+    if annotation_filenames != prediction_filenames:
+        missing_in_pred = annotation_filenames - prediction_filenames
+        missing_in_annot = prediction_filenames - annotation_filenames
+
+        if missing_in_pred:
+            print(f"[ERROR] Your submission is missing predictions for these files:\n{sorted(missing_in_pred)}")
+        if missing_in_annot:
+            print(f"[ERROR] Your submission contains extra predictions for files not in ground truth:\n{sorted(missing_in_annot)}")
+        sys.exit(1)
+
     # Index predictions by filename for quick lookup
     pred_dict = {entry["filename"]: entry["prediction"] for entry in predictions}
 
@@ -29,11 +49,6 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     for entry in annotations:
         filename = entry["filename"]
         label = entry["label"]
-
-        if filename not in pred_dict:
-            missed_files += 1
-            continue
-
         prediction = pred_dict[filename]
 
         # Convert both label and prediction to Wylie transliteration
@@ -52,7 +67,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     else:
         mean_cer = sum(cer_scores) / len(cer_scores)
 
-    print(f"Evaluated {len(cer_scores)} samples. Missed {missed_files} files.")
+    print(f"Evaluated {len(cer_scores)} samples.")
     print(f"Mean CER: {mean_cer:.4f}")
 
     # Build EvalAI-compatible output
