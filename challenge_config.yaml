@@ -38,8 +38,8 @@ challenge_phases:
     description: templates/challenge_phase_1_description.html
     # leaderboard_public: True # Hide the leaderboard
     leaderboard_public: False
-    is_public: True # (a Boolean field that gives the flexibility to Challenge Hosts to either hide or show the challenge phase to participants. Default is False)
-    # is_public: False
+    # is_public: True # (a Boolean field that gives the flexibility to Challenge Hosts to either hide or show the challenge phase to participants. Default is False)
+    is_public: False
     challenge: 1
     is_active: True
     max_concurrent_submissions_allowed: 3
