@@ -44,7 +44,6 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     pred_dict = {entry["filename"]: entry["prediction"] for entry in predictions}
 
     cer_scores = []
-    missed_files = 0
 
     for entry in annotations:
         filename = entry["filename"]
