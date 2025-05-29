@@ -4,7 +4,7 @@
   and can be evaluated successfully.
 </p>
 
-<h3>✅ File Format</h3>
+<h5>✅ File Format</h5>
 <ul>
   <li>Your submission must be in <strong>JSON</strong> format.</li>
   <li>The JSON file must contain a list of prediction entries.</li>
@@ -23,20 +23,17 @@
   </li>
 </ul>
 
-<h3>📝 Example JSON Structure</h3>
+<h5>📝 Example JSON Structure</h5>
 <pre><code>[
     {
-        "filename": "img_001.jpg",
-        "prediction": "བོད་ཡིག"
-    },
-    {
-        "filename": "img_002.jpg",
-        "prediction": "གསུང་བཤད"
-    }
+    "filename": "7-1-415b_2",
+    "image_url": "{image url same as in test dataset}",
+    "prediction": "ཡིན་པའི་ཕྱིར་རོ། ། དགག་དགྱེའི་གཞིའོ། ། ། གཉིས་པ་ནི། ནང་ཞེ་འགྲས་བདང་ .... "
+  }
 ]
 </code></pre>
 
-<h3>📌 Important Notes</h3>
+<h5>📌 Important Notes</h5>
 <ul>
   <li>
     <strong>Do not</strong> include additional fields like IDs, confidence
@@ -55,29 +52,25 @@
     <strong>valid Unicode Tibetan</strong> text.
   </li>
   <li>
-    Any image files in the test set that are missing from your submission will
-    be counted as <strong>missed files</strong> and excluded from scoring.
+    There shouldn't be more or less rows in user submission file. By doing so
+    will <strong>not</strong> be evaluated.
   </li>
 </ul>
 
-<h3>📤 How to Submit</h3>
+<h5>📤 How to Submit</h5>
 <ol>
   <li>Prepare your JSON file according to the format described above.</li>
   <li>Name the file clearly, e.g., <code>submission.json</code>.</li>
-  <li>
-    Upload your file through the designated platform interface (e.g., EvalAI
-    submission portal).
-  </li>
 </ol>
 
-<h3>📊 Evaluation</h3>
+<h5>📊 Evaluation</h5>
 <p>
   Your predictions will be evaluated using the
   <strong>Character Error Rate (CER)</strong>. The lower your CER score, the
   better the performance.
 </p>
 
-<h3>🚫 Submission Will Be Rejected If:</h3>
+<h5>🚫 Submission Will Be Rejected If:</h5>
 <ul>
   <li>The file is not in valid JSON format.</li>
   <li>
@@ -88,6 +81,6 @@
 </ul>
 
 <p>
-  For any issues or clarifications, please reach out to the challenge
-  organizers.
+  For any issues or clarifications, please reach out to the challenge organizers
+  at <a href="mailto:support@yourchallenge.org">support@yourchallenge.org</a>.
 </p>
