@@ -42,6 +42,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     pred_dict = {entry["filename"]: entry["prediction"] for entry in predictions}
 
     cer_scores = []
+    count = 1
 
     for entry in annotations:
         filename = entry["filename"]
@@ -58,6 +59,11 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         except Exception as e:
             print(f"[ERROR] Failed on {filename}: {e}")
             continue
+
+        if count % 1000 == 0:
+            print(f"done with {count}")
+        
+        count+=1
 
     if len(cer_scores) == 0:
         mean_cer = 1.0  # Set max CER if nothing evaluated
@@ -126,4 +132,3 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             'submitted_at': u'2017-03-20T19:22:03.880652Z'
         }
     """
-
