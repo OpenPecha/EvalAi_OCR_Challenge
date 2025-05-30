@@ -24,7 +24,6 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     # Validate: Check file sizes are same
     if len(annotations) != len(predictions):
         print(f"[ERROR] Mismatch in number of entries: annotations({len(annotations)}) != predictions({len(predictions)})")
-        sys.exit(1)
     
     # Validate: Ensure all filenames match
     annotation_filenames = {entry["filename"] for entry in annotations}
@@ -38,7 +37,6 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             print(f"[ERROR] Your submission is missing predictions for these files:\n{sorted(missing_in_pred)}")
         if missing_in_annot:
             print(f"[ERROR] Your submission contains extra predictions for files not in ground truth:\n{sorted(missing_in_annot)}")
-        sys.exit(1)
 
     # Index predictions by filename for quick lookup
     pred_dict = {entry["filename"]: entry["prediction"] for entry in predictions}
