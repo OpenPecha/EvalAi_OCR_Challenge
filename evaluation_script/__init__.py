@@ -48,10 +48,10 @@ def install(package):
 
 # install("shapely==1.7.1")
 # install("requests==2.25.1")
-install("evaluate==0.4.3")
-install("jiwer==3.1.0")
-install("pyewts==0.2.0")
-install("pandas==2.2.3")
+install("evaluate")
+install("jiwer")
+install("pyewts")
+install("pandas")
 
 
 
