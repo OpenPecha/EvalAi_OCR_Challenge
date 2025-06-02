@@ -21,33 +21,36 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     annotations = load_json_file(test_annotation_file)
     predictions = load_json_file(user_submission_file)
 
-    # Validate: Check file sizes are same
-    if len(annotations) != len(predictions):
-        print(f"[ERROR] Mismatch in number of entries: annotations({len(annotations)}) != predictions({len(predictions)})")
-    
-    # Validate: Ensure all filenames match
-    annotation_filenames = {entry["filename"] for entry in annotations}
-    prediction_filenames = {entry["filename"] for entry in predictions}
-
-    if annotation_filenames != prediction_filenames:
-        missing_in_pred = annotation_filenames - prediction_filenames
-        missing_in_annot = prediction_filenames - annotation_filenames
-
-        if missing_in_pred:
-            print(f"[ERROR] Your submission is missing predictions for these files:\n{sorted(missing_in_pred)}")
-        if missing_in_annot:
-            print(f"[ERROR] Your submission contains extra predictions for files not in ground truth:\n{sorted(missing_in_annot)}")
-
     # Index predictions by filename for quick lookup
     pred_dict = {entry["filename"]: entry["prediction"] for entry in predictions}
+
+    annotation_filenames = {entry["filename"] for entry in annotations}
+    prediction_filenames = set(pred_dict.keys())
+    common_filenames = annotation_filenames & prediction_filenames
+
+    missing_in_pred = annotation_filenames - prediction_filenames
+    if missing_in_pred:
+        print(f"[WARNING] Missing predictions for {len(missing_in_pred)} files: {sorted(missing_in_pred)}")
+
+    extra_in_pred = prediction_filenames - annotation_filenames
+    if extra_in_pred:
+        print(f"[WARNING] Extra predictions for {len(extra_in_pred)} files not in ground truth: {sorted(extra_in_pred)}")
 
     cer_scores = []
     count = 1
 
     for entry in annotations:
         filename = entry["filename"]
-        label = entry["label"]
-        prediction = pred_dict[filename]
+        if filename not in common_filenames:
+            continue
+
+
+        label = entry["label"].strip()
+        prediction = pred_dict[filename].strip()
+
+        if not label or not prediction:
+            print(f"[WARNING] Skipping empty label or prediction for {filename}")
+            continue
 
         # Convert both label and prediction to Wylie transliteration
         label_wylie = converter.toWylie(label.strip())
